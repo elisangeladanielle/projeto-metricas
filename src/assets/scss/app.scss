@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins&display=swap');
+@import '../../../node_modules/bootstrap/dist/css/bootstrap.css';
+@import '../../../node_modules/@fortawesome/fontawesome-free/css/all.css';
+@import 'variables';
+
+* {
+    font-family: 'Avenir', 'Poppins', sans-serif;
+}
+
+.btn,
+.card,
+.alert,
+.form-control,
+.modal-content {
+    border-radius: 0;
+}
+
+.btn-primary {
+  background-color: $featured;
+  border-color: $featured-dark;
+  &:hover {
+    background-color: $featured-dark;
+  }
+}
+
+.btn-outline-primary {
+  border-color: var(--featured) !important;
+  color: var(--featured) !important;
+  &:hover {
+    color: var(--darker) !important;
+    background-color: var(--featured) !important;
+  }
+}
+
+.btn-outline-secundary {
+  border-color: var(--featured) !important;
+  color: var(--featured) !important;
+  &:hover {
+    color: var(--darker) !important;
+    background-color: var(--featured) !important;
+  }
+}
