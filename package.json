@@ -16,6 +16,7 @@
     "mdbvue": "^5.5.0",
     "moment": "^2.24.0",
     "vue": "^2.6.10",
+    "vue-pdf": "^4.0.7",
     "vue-router": "^3.0.3"
   },
   "devDependencies": {

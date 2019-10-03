@@ -9,7 +9,7 @@ const router = new Router({
       path: '/',
       name: 'home',
       meta: {
-        icon: 'home', title: 'Home'
+        icon: 'home', title: 'Página Inicial'
       },
       component: () => import(/* webpackChunkName: "home" */ './pages/home/Home')
     },
@@ -22,12 +22,28 @@ const router = new Router({
       component: () => import(/* webpackChunkName: "home" */ './pages/lista-atividades/ListaAtividades')
     },
     {
+      path: '/level',
+      name: 'level',
+      meta: {
+        icon: 'sort-amount-up', title: 'Níveis'
+      },
+      component: () => import(/* webpackChunkName: "arquivos" */ './components/layout/LayoutLevel')
+    },
+    {
       path: '/dashboard',
       name: 'dashboard',
       meta: {
         icon: 'chart-line', title: 'Dashboard'
       },
       component: () => import(/* webpackChunkName: "home" */ './components/layout/LayoutDashboard')
+    },
+    {
+      path: '/arquivos',
+      name: 'arquivos',
+      meta: {
+        icon: 'folder-open', title: 'Arquivos Base'
+      },
+      component: () => import(/* webpackChunkName: "arquivos" */ './components/layout/LayoutArquivos')
     },
     {
       path: '/login',

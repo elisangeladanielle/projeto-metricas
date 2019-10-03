@@ -13,7 +13,7 @@
       {{ router.meta.title }}
       </router-link>
       <hr>
-      <layout-new-expense/>
+      <layout-nova-atividade/>
     </div>
 <layout-logout/>
 </nav>
@@ -21,12 +21,12 @@
 
 <script>
 import LayoutLogout from './LayoutLogout'
-import LayoutNewExpense from './LayoutNewExpense'
+import LayoutNovaAtividade from './LayoutNovaAtividade'
 
 export default {
   components: {
     LayoutLogout,
-    LayoutNewExpense
+    LayoutNovaAtividade
   },
   computed: {
     routerLinks () {

@@ -12,7 +12,7 @@ import { mdbLineChart, mdbContainer } from 'mdbvue'
 import moment from 'moment'
 import groupBy from 'lodash.groupby'
 import database from 'firebase'
-import ExpenseListItem from '../../pages/lista-atividades/ExpenseListItem'
+import ActivityListItem from '../../pages/lista-atividades/ActivityListItem'
 import ListaAtividades from '../../pages/lista-atividades/ListaAtividades'
 
   export default {
@@ -20,12 +20,12 @@ import ListaAtividades from '../../pages/lista-atividades/ListaAtividades'
     components: {
       mdbLineChart,
       mdbContainer,
-      ExpenseListItem,
+      ActivityListItem,
       ListaAtividades
     },
     data() {
       return {
-        expenses: [],
+        atividades: [],
         activeMonth: {},
         lineChartData: {
           labels: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho"],
@@ -33,13 +33,13 @@ import ListaAtividades from '../../pages/lista-atividades/ListaAtividades'
             {
               label: 'Quantidade de atividades / Meses',
               backgroundColor: "rgba(151,187,205,0.2)",
-              borderColor: "rgba(151,187,205,1)",
+              borderColor: "rgba(255, 255, 255, 1.0)",//"rgba(151,187,205,1)",
               borderWidth: 0.7,
               data: []
             },
             {
               label: "Atividades por mês",
-              backgroundColor: "rgba(255,140,0,0.6)",//"rgba(255,127,0.8)",//"rgba(255, 99, 132, 0.1)",
+              backgroundColor: "rgba(153,51,153,1)",//"rgba(255,140,0,0.6)",//"rgba(255,127,0.8)",//"rgba(255, 99, 132, 0.1)",
               borderColor: "rgba(255, 255, 255, 1.0)",//"rgba(360,0,1,1)",//"rgba(255, 99, 132, 1)",
               borderWidth: 0.8,
               data: []
@@ -85,8 +85,8 @@ import ListaAtividades from '../../pages/lista-atividades/ListaAtividades'
           })
         }
 
-        if (this.expenses.length) {
-          const months = groupBy(this.expenses, i => (
+        if (this.atividades.length) {
+          const months = groupBy(this.atividades, i => (
             moment(i.creatat).format('MM/YYYY')
           ))
 
@@ -138,7 +138,7 @@ import ListaAtividades from '../../pages/lista-atividades/ListaAtividades'
 
         ref.on('value', snapshot => {
           const values = snapshot.val()
-          this.expenses = Object.keys(values).map(i => values[i])
+          this.atividades = Object.keys(values).map(i => values[i])
         })
       },
       setActiveMonth (month = null) {

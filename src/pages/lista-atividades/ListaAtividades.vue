@@ -19,7 +19,7 @@
           Você não cadastrou nenhuma atividade neste mês.
         </div>
         <template v-else>
-          <expense-list-item
+          <activity-list-item
             :key="index"
             :data="item"
             v-for="(item, index) in activeMonth.data"
@@ -33,15 +33,15 @@
 <script>
 import moment from 'moment'
 import groupBy from 'lodash.groupby'
-import ExpenseListItem from './ExpenseListItem'
+import ActivityListItem from './ActivityListItem'
 
 export default {
   name: 'ListaAtividades',
   components: {
-    ExpenseListItem
+    ActivityListItem
   },
   data: () => ({
-    expenses: [],
+    atividades: [],
     activeMonth: {}
   }),
   created () {
@@ -62,8 +62,8 @@ export default {
         })
       }
 
-      if (this.expenses.length) {
-        const months = groupBy(this.expenses, i => (
+      if (this.atividades.length) {
+        const months = groupBy(this.atividades, i => (
           moment(i.creatat).format('MM/YYYY')
         ))
 
@@ -99,7 +99,7 @@ export default {
 
       ref.on('value', snapshot => {
         const values = snapshot.val()
-        this.expenses = Object.keys(values).map(i => values[i])
+        this.atividades = Object.keys(values).map(i => values[i])
       })
     },
     setActiveMonth (month = null) {

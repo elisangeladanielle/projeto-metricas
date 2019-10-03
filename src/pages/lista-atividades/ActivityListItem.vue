@@ -1,5 +1,5 @@
 <template>
-  <div class="expense-list-item row">
+  <div class="activity-list-item row">
     <div class="col-10">
       <div class="description">
         <span>{{ data.description }}</span>
@@ -33,7 +33,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  .expense-list-item {
+  .activity-list-item {
     padding-top: 10px;
     padding-bottom: 10px;
     border-bottom: 1px solid var(--dark-medium);

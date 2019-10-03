@@ -30,14 +30,14 @@
 export default {
   name: 'Home',
   data: () => ({
-    expenses: []
+    atividades: []
   }),
   created () {
     this.getData()
   },
   computed: {
     totals () {
-      const { expenses: exp } = this
+      const { atividades: exp } = this
       const values = {
         totalSpent: 0,
         average: 0,
@@ -64,7 +64,7 @@ export default {
 
       ref.on('value', data => {
         const values = data.val()
-        this.expenses = Object.keys(values).map(i => values[i])
+        this.atividades = Object.keys(values).map(i => values[i])
         // console.log(Object.keys(values).map(i => values[i]))
       })
     }
