@@ -98,7 +98,7 @@ export default {
       const ref = this.$firebase.database().ref(`/${window.uid}`)
 
       ref.on('value', snapshot => {
-        const values = snapshot.val()
+        const values = snapshot.val();
         this.atividades = Object.keys(values).map(i => values[i])
       })
     },

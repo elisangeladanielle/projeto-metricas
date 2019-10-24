@@ -16,7 +16,7 @@ import ActivityListItem from '../../pages/lista-atividades/ActivityListItem'
 import ListaAtividades from '../../pages/lista-atividades/ListaAtividades'
 
   export default {
-    name: 'ChartPage',
+    name: 'LayoutDashboard',
     components: {
       mdbLineChart,
       mdbContainer,
