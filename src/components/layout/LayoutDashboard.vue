@@ -28,6 +28,7 @@ import ListaAtividades from '../../pages/lista-atividades/ListaAtividades'
         atividades: [],
         activeMonth: {},
         lineChartData: {
+          // labels: [],
           labels: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho"],
           datasets: [
             {
@@ -74,6 +75,14 @@ import ListaAtividades from '../../pages/lista-atividades/ListaAtividades'
       this.setActiveMonth()
     },
     computed: {
+      //  showLabels() {
+      //    if (month = $`01/2019`) {
+      //      labels = Janeiro;
+      //    }
+      //   if (month = [02/2019]) {
+      //     this.labels = Fevereiro;
+      //   }
+      // },
       groupedMonths () {
         let groupedMonths = []
 
@@ -113,8 +122,55 @@ import ListaAtividades from '../../pages/lista-atividades/ListaAtividades'
           addCurrentMonth()
         }
 
+        const monthsToLabels = groupedMonths.map(m => {
+          console.log(m);
+          const month = m.month.split("/")[0];
+
+          switch (month) {
+            case "01":
+              return '1';
+              break;
+            case "02":
+              return '2';
+              break;
+              case "03":
+              return '3';
+              break;
+              case "04":
+              return '4';
+              break;
+              case "05":
+              return '5';
+              break;
+              case "06":
+              return '6';
+              break;
+              case "07":
+              return '7';
+              break;
+              case "08":
+              return '8';
+              break;
+              case "09":
+              return '9';
+              break;
+              case "10":
+              return 'Outubro';
+              break;
+              case "11":
+              return 'Outubro';
+              break;
+            case "12":
+              return '12';
+              break;
+          }
+        });
+
+        console.log(monthsToLabels);
+
         this.lineChartData = {
           ...this.lineChartData,
+          labels: monthsToLabels,
           datasets: [
             ...this.lineChartData.datasets.map((d, i) => {
               if (i === 1) {

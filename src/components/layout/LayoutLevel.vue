@@ -5,15 +5,13 @@
   :key="index"
   class="card text-center bg-dark mb-3" style="max-width: 18rem;">
     <div
-    class="card-header">Nível {{`${level}`}} </div>
+    class="card-header">Nível {{`${item.level}`}} </div>
     <div class="card-body">
       <h5
-
       class="card-title">No mês {{`${item.date}`}} você atingiu esse nível:</h5>
       <p class="card-text">Progresso:</p>
       <div id="value-progress" class="progress">
         <div
-
         class="progress-bar bg-success progress-bar-striped progress-bar-animated"
         role="progressbar"
         aria-valuenow="90"
@@ -92,89 +90,94 @@ export default {
         const ref = this.$firebase.database().ref(`/${window.uid}`);
 
         ref.on('value', (snapshot) => {
-          const values = snapshot.val();
-          const result = [];
+          let values = snapshot.val();
+          let result = [];
           let total = 0;
           var hasItem = false;
           var level = [];
           let meta = 10;
           let gatilho = 0;
+          let teste = [];
 
           for (let key of Object.keys(values)) {
             const item = values[key];
             const date = moment(item.creatat).format('MM-YYYY');
+            let currentValue = 0;
 
             result.forEach(r => {
               if(r['date'] == date) {
-                r['value'] += item.value;
+                r['value'] = r['value'] ? Number(r['value']) : r['value'];
+                r['value'] += item.value ? Number(item.value) : item.value;
+
                 hasItem = true;
               }
             });
+
             if (!hasItem) {
               result.push({'date': date, 'value': item.value});
             }
             hasItem = false;
           }
 
-          result.forEach(r => {
-            r['value'] = (r['value'] * 100) / 10;
+          result.forEach((r, i)=> {
+            console.log(r['value'], meta);
+            r['value'] = ((r['value'] * 100) / meta) || 10;
             r['value'] = r['value'] >= 100
               ? 100
               : r['value'];
+
+              //console.log(r['value']);
           });
 
-          result.forEach(r => {
-            if(r['value'] && r['value'] >= 100){
-              level.push(2);
-              // this.level = 2
-              // level.forEach(v => {
+          // result.forEach(r => {
+          //   if(r['value'] && r['value'] >= 100)
+          //     level.push(2);
+          //   else
+          //     level.push(1);
+          // });
 
-              // })
+          result = result.map(r => ({ ...r, level: 1 }));
+
+          result = result.reduce((acc, cur) => {
+            if (cur.value === 100) {
+              meta = meta * ((cur.level || 0) + 1);
+              return [
+                ...acc,
+                cur,
+                {
+                  level: (cur.level || 0) + 1,
+                  date: cur.date, //mudar date depois
+                  value: 0
+                }
+              ];
             }
-            else {
-              this.level = 1
-              level.push(1)
-            }
-          })
+
+            return [...acc, cur];
+          }, []);
+
+          this.level = level;
 
           this.result = result;
+
           const currentMonth = moment().format('MM-YYYY');
 
           this.progressValue = result[currentMonth];
         });
-
-        // const ref = this.$firebase.database().ref(`/${window.uid}`)
-
-        // ref.on('value', snapshot => {
-        //   console.log(snapshot.val());
-
-        //   const result = snapshot.val();
-        //   console.log(result);
-
-          // this.atividades = Object.keys(values).map(i => values[i])
-        // })
       },
       setActiveMonth (month = null) {
         this.activeMonth = month || this.groupedMonths[this.groupedMonths.length - 1]
       }
     }
   }
-
-//let valueLevel = pegar o valor do firebase (igual do dashboard);
-//let calculoValue = valueLevel - valor fazer o calculo da %
-//let valueProgress = document.querySelector('#value-progress div');
-//valueProgress.setAttribute('aria-valuenow', calculoValue);
-//valueProgress.style.width = calculoValue;
-
-
 </script>
 
 
 <style lang="css" scoped>
 .card-columns {
-  color: var(--featured);
+  color: var(--light);
   padding: 15px;
   width: 100%;
+  height: 100%;
   flex-direction: column;
   justify-content: center;
   align-items: center;
