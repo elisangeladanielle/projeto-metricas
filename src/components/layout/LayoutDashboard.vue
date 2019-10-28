@@ -128,40 +128,40 @@ import ListaAtividades from '../../pages/lista-atividades/ListaAtividades'
 
           switch (month) {
             case "01":
-              return '1';
+              return 'Janeiro';
               break;
             case "02":
-              return '2';
+              return 'Fevereiro';
               break;
               case "03":
-              return '3';
+              return 'Março';
               break;
               case "04":
-              return '4';
+              return 'Abril';
               break;
               case "05":
-              return '5';
+              return 'Maio';
               break;
               case "06":
-              return '6';
+              return 'Junho';
               break;
               case "07":
-              return '7';
+              return 'Julho';
               break;
               case "08":
-              return '8';
+              return 'Agosto';
               break;
               case "09":
-              return '9';
+              return 'Setembro';
               break;
               case "10":
               return 'Outubro';
               break;
               case "11":
-              return 'Outubro';
+              return 'Novembro';
               break;
             case "12":
-              return '12';
+              return 'Dezembro';
               break;
           }
         });

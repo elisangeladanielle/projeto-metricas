@@ -151,7 +151,6 @@ export default {
                 }
               ];
             }
-
             return [...acc, cur];
           }, []);
 
