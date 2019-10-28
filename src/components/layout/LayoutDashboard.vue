@@ -75,14 +75,6 @@ import ListaAtividades from '../../pages/lista-atividades/ListaAtividades'
       this.setActiveMonth()
     },
     computed: {
-      //  showLabels() {
-      //    if (month = $`01/2019`) {
-      //      labels = Janeiro;
-      //    }
-      //   if (month = [02/2019]) {
-      //     this.labels = Fevereiro;
-      //   }
-      // },
       groupedMonths () {
         let groupedMonths = []
 
@@ -123,7 +115,7 @@ import ListaAtividades from '../../pages/lista-atividades/ListaAtividades'
         }
 
         const monthsToLabels = groupedMonths.map(m => {
-          console.log(m);
+          //console.log(m);
           const month = m.month.split("/")[0];
 
           switch (month) {
@@ -166,7 +158,7 @@ import ListaAtividades from '../../pages/lista-atividades/ListaAtividades'
           }
         });
 
-        console.log(monthsToLabels);
+        //console.log(monthsToLabels);
 
         this.lineChartData = {
           ...this.lineChartData,

@@ -152,11 +152,11 @@ export default {
 
         const payload = {
           id,
-          // receipt: '',
-          ...this.form,
+          receipt: '',
+          //...this.form,
           receipt: url,
-          // value: this.form.value,
-          // description: this.form.description,
+          value: Number(this.form.value),
+          description: this.form.description,
           creatat: new Date().getTime()
         }
 

@@ -5,7 +5,7 @@
   :key="index"
   class="card text-center bg-dark mb-3" style="max-width: 18rem;">
     <div
-    class="card-header">Nível {{`${item.level}`}} </div>
+    class="card-header">Nível {{`${item.level}`}}</div>
     <div class="card-body">
       <h5
       class="card-title">No mês {{`${item.date}`}} você atingiu esse nível:</h5>
@@ -87,46 +87,63 @@ export default {
         return `width: ${item['value']}%`;
       },
       getData () {
-        const ref = this.$firebase.database().ref(`/${window.uid}`);
+        const ref = this.$firebase.database().ref(`/${window.uid}`).orderByChild("creatat");
 
-        ref.on('value', (snapshot) => {
-          let values = snapshot.val();
+        ref.on('value', snapshot => {
+        let values = [];
+        snapshot.forEach( value => {
+          values.push(value.val());
+        });
+        //console.log(values);
           let result = [];
           let total = 0;
           var hasItem = false;
-          var level = [];
+          //var level = [];
           let meta = 10;
-          let gatilho = 0;
-          let teste = [];
+          let index = 0;
+          let addLevel = -1;
+          let level = 1;
 
-          for (let key of Object.keys(values)) {
-            const item = values[key];
+          for (let item of values) {
+            //const item = values[key];
             const date = moment(item.creatat).format('MM-YYYY');
             let currentValue = 0;
 
             result.forEach(r => {
               if(r['date'] == date) {
-                r['value'] = r['value'] ? Number(r['value']) : r['value'];
-                r['value'] += item.value ? Number(item.value) : item.value;
+                r['value'] += item.value;
 
                 hasItem = true;
               }
             });
 
             if (!hasItem) {
-              result.push({'date': date, 'value': item.value});
+              result.push({
+                'date': date,
+                'value': (item.value),
+
+                });
             }
             hasItem = false;
+            index ++;
           }
 
           result.forEach((r, i)=> {
-            console.log(r['value'], meta);
-            r['value'] = ((r['value'] * 100) / meta) || 10;
-            r['value'] = r['value'] >= 100
-              ? 100
-              : r['value'];
-
-              //console.log(r['value']);
+            //console.log(r['value'], meta);
+            if (i == addLevel) {
+              level ++;
+              meta += 10;
+              r['level'] = level;
+            }
+            else{
+              r['level'] = level;
+            }
+            r['lucro'] = r['value'] - meta;
+            r['value'] = ((r['value'] * 100) / meta);
+            if (r['value'] >= 100) {
+              r['value'] = 100;
+              addLevel = i + 1;
+            }
           });
 
           // result.forEach(r => {
@@ -136,25 +153,27 @@ export default {
           //     level.push(1);
           // });
 
-          result = result.map(r => ({ ...r, level: 1 }));
+          // result = result.map(r => ({ ...r, level: 1 }));
 
-          result = result.reduce((acc, cur) => {
-            if (cur.value === 100) {
-              meta = meta * ((cur.level || 0) + 1);
-              return [
-                ...acc,
-                cur,
-                {
-                  level: (cur.level || 0) + 1,
-                  date: cur.date, //mudar date depois
-                  value: 0
-                }
-              ];
-            }
-            return [...acc, cur];
-          }, []);
+          // result = result.reduce((acc, cur) => {
+          //   if (cur.value == 100) {
+          //     meta = meta * ((cur.level || 0) + 1);
+          //     //meta = meta * cur.level;
+          //     return [
+          //       ...acc,
+          //       cur,
+          //       {
+          //         level: (cur.level || 0) + 1,
+          //         date: cur.date, //mudar date depois
+          //         //date: result['date'] + 1,
+          //         value: 0
+          //       }
+          //     ];
+          //   }
+          //   return [...acc, cur];
+          // }, []);
 
-          this.level = level;
+          //this.level = level;
 
           this.result = result;
 
