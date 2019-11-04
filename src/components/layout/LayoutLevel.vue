@@ -21,6 +21,18 @@
         </div>
       </div>
     </div>
+    <div class="card-footer text-muted" v-if="item['subtrai'] < 0">
+    Lucro de {{`${item.subtrai}`*-1}} atividades.
+  </div>
+    <div class="card-footer text-muted" v-else-if="item['subtrai'] > 0">
+    Faltaram {{`${item.subtrai}`}} atividades.
+  </div>
+  <div class="card-footer text-muted" v-else>
+    Nível concluído!
+  </div>
+  <!-- <div class="card-footer text-muted" v-else-if="item['subtrai'] = 0">
+    teste
+  </div> -->
   </div>
 </div>
 </template>
@@ -41,7 +53,9 @@ export default {
     atividades: [],
     activeMonth: {},
     progressValue: 90,
-    level: 0
+    level: 0,
+    subtrai: 0,
+    meta: 0
   }),
   mounted () {
     this.getData();
@@ -103,6 +117,7 @@ export default {
           let index = 0;
           let addLevel = -1;
           let level = 1;
+          let subtrai = 0;
 
           for (let item of values) {
             //const item = values[key];
@@ -112,7 +127,6 @@ export default {
             result.forEach(r => {
               if(r['date'] == date) {
                 r['value'] += item.value;
-
                 hasItem = true;
               }
             });
@@ -134,9 +148,15 @@ export default {
               level ++;
               meta += 10;
               r['level'] = level;
+              subtrai = (meta - r['value']);
+              r['subtrai'] = subtrai;
+              //console.log(r['subtrai']);
             }
             else{
               r['level'] = level;
+              subtrai = meta - r['value'];
+              r['subtrai'] = subtrai;
+              //console.log(subtrai);
             }
             r['lucro'] = r['value'] - meta;
             r['value'] = ((r['value'] * 100) / meta);
