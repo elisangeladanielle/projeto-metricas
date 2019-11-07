@@ -22,13 +22,13 @@
       </div>
     </div>
     <div class="card-footer text-muted" v-if="item['subtrai'] < 0">
-    Lucro de {{`${item.subtrai}`*-1}} atividades.
+    Lucro de {{`${item.subtrai}`*-1}} atividades. &#128516;
   </div>
     <div class="card-footer text-muted" v-else-if="item['subtrai'] > 0">
-    Faltaram {{`${item.subtrai}`}} atividades.
+    Faltaram {{`${item.subtrai}`}} atividades. &#128577;
   </div>
   <div class="card-footer text-muted" v-else>
-    Nível concluído!
+    Nível concluído! &#128522;
   </div>
   <!-- <div class="card-footer text-muted" v-else-if="item['subtrai'] = 0">
     teste
@@ -208,7 +208,6 @@ export default {
     }
   }
 </script>
-
 
 <style lang="css" scoped>
 .card-columns {
