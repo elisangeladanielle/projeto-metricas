@@ -10,14 +10,33 @@
       <h5
       class="card-title">No mês {{`${item.date}`}} você atingiu esse nível:</h5>
       <p class="card-text">Progresso:</p>
-      <div id="value-progress" class="progress">
+      <div class="progress">
         <div
-        class="progress-bar bg-success progress-bar-striped progress-bar-animated"
+        v-if="getDate(item['date'])"
+        class="progress-bar progress-bar-striped bg-warning progress-bar-animated"
+        role="progressbar"
+        aria-valuenow="90"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        :style="progressWidth(item)">{{`${item['value'].toFixed()}%`}}
+        </div>
+        <div
+        v-else-if="item['value'] >= 100"
+        class="progress-bar bg-success"
         role="progressbar"
         aria-valuenow="90"
         aria-valuemin="0"
         aria-valuemax="100"
         :style="progressWidth(item)">{{`${item['value']}%`}}
+        </div>
+        <div
+        v-else-if="item['value'] < 100"
+        class="progress-bar bg-danger progress-bar-animated"
+        role="progressbar"
+        aria-valuenow="90"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        :style="progressWidth(item)">{{`${item['value'].toFixed()}%`}}
         </div>
       </div>
     </div>
@@ -38,8 +57,8 @@
 </template>
 
 <script>
-import moment from 'moment'
 import groupBy from 'lodash.groupby'
+import moment from 'moment'
 import ActivityListItem from '../../pages/lista-atividades/ActivityListItem'
 import ListaAtividades from '../../pages/lista-atividades/ListaAtividades'
 export default {
@@ -97,6 +116,9 @@ export default {
     },
   },
   methods: {
+      getDate(date) {
+        return moment(date, "MM-YYYY").month() + 1 === moment().month() + 1;
+      },
       progressWidth(item) {
         return `width: ${item['value']}%`;
       },

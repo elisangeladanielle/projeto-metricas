@@ -5,12 +5,11 @@
         <small>Total de atividades inseridas:</small>
         <div class="money">{{parseFloat(totals.totalSpent)}}</div>
         <small>
-
         </small>
       </div>
       <div class="col-6 home-box">
         <small>A média de atividades é de:</small>
-        <div class="money">{{parseFloat(totals.average)}}</div>
+        <div class="money">{{parseFloat(totals.average).toFixed(1)}}</div>
       </div>
       <div class="col-6 home-box">
         <small>A maior frequência de atividades foi de:</small>

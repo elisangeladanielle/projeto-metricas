@@ -114,55 +114,49 @@ import ListaAtividades from '../../pages/lista-atividades/ListaAtividades'
           addCurrentMonth()
         }
 
-        const monthsToLabels = groupedMonths.map(m => {
-          //console.log(m);
-          const month = m.month.split("/")[0];
+        const dateRange = (startDate, endDate) => {
+          var start      = startDate.split('/');
+          var end        = endDate.split('/');
+          var startYear  = parseInt(start[1]);
+          var endYear    = parseInt(end[1]);
+          var dates      = [];
+          var monthNames = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+          var arrMonthNames = [];
 
-          switch (month) {
-            case "01":
-              return 'Janeiro';
-              break;
-            case "02":
-              return 'Fevereiro';
-              break;
-              case "03":
-              return 'Março';
-              break;
-              case "04":
-              return 'Abril';
-              break;
-              case "05":
-              return 'Maio';
-              break;
-              case "06":
-              return 'Junho';
-              break;
-              case "07":
-              return 'Julho';
-              break;
-              case "08":
-              return 'Agosto';
-              break;
-              case "09":
-              return 'Setembro';
-              break;
-              case "10":
-              return 'Outubro';
-              break;
-              case "11":
-              return 'Novembro';
-              break;
-            case "12":
-              return 'Dezembro';
-              break;
+          for(var i = startYear; i <= endYear; i++) {
+            var endMonth = i != endYear ? 11 : parseInt(end[0]) - 1;
+            var startMon = i === startYear ? parseInt(start[0])-1 : 0;
+            for(var j = startMon; j <= endMonth; j = j > 12 ? j % 12 || 11 : j+1) {
+              var month = j+1;
+              var displayMonth = month < 10 ? '0'+month : month;
+              dates.push([displayMonth, i].join('/'));
+              arrMonthNames.push(monthNames[month - 1]);
+            }
           }
+          return { dates: dates, arrMonthNames: arrMonthNames };
+        }
+
+        const arrMonthMap = groupedMonths.map(m => m.month);
+        const dates = dateRange(arrMonthMap[0], arrMonthMap[arrMonthMap.length - 1]);
+        const copy = JSON.parse(JSON.stringify(groupedMonths));
+        let arr = [];
+
+        dates.dates.forEach((elem, i) => {
+          const findMonth = copy.find(m => m.month === elem);
+
+          if (findMonth)
+            arr.push(findMonth);
+          else
+            arr.push({ month: elem, data: [], total: 0 });
         });
 
-        //console.log(monthsToLabels);
+        groupedMonths = arr;
+
+        console.log(groupedMonths);
 
         this.lineChartData = {
           ...this.lineChartData,
-          labels: monthsToLabels,
+          labels: dates.arrMonthNames,
           datasets: [
             ...this.lineChartData.datasets.map((d, i) => {
               if (i === 1) {

@@ -59,23 +59,14 @@
 <script>
 /* eslint-disable */
 export default {
-  name: 'WebViewer',
+  name: 'LayoutArquivos',
   props: {
     path: String,
     url: String
   },
-  mounted: function () {
-        WebViewer({
-            path: this.path,
-            initialDoc: this.url, // replace with your own PDF file
-          }, this.$refs.viewer).then((instance) => {
-            // call apis here
-          });
-    }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="css" scoped>
 .card-columns {
   padding: 15px;
