@@ -8,8 +8,8 @@
     class="card-header">Nível {{`${item.level}`}}</div>
     <div class="card-body">
       <h5
-      class="card-title">No mês {{`${item.date}`}} você atingiu esse nível:</h5>
-      <p class="card-text">Progresso:</p>
+      class="card-title">Progresso</h5>
+      <p class="card-text">do mês {{`${item.date}`}}:</p>
       <div class="progress">
         <div
         v-if="getDate(item['date'])"
@@ -40,11 +40,17 @@
         </div>
       </div>
     </div>
-    <div class="card-footer text-muted" v-if="item['subtrai'] < 0">
-    Lucro de {{`${item.subtrai}`*-1}} atividades. &#128516;
+  <div class="card-footer text-muted" v-if="getDate(item['date']) && item['subtrai'] >= 0 && item['value'] >= 100">
+    Você tem {{`${item.subtrai}`*-1}} atividades de lucro! &#128516;
+  </div>
+    <div class="card-footer text-muted" v-else-if="getDate(item['date']) && item['subtrai'] < 0">
+    Faça mais {{`${item.subtrai}`}} atividades... &#128521;
+  </div>
+    <div class="card-footer text-muted" v-else-if="item['subtrai'] < 0">
+    Lucro de {{`${item.subtrai}`*-1}} atividades &#128516;
   </div>
     <div class="card-footer text-muted" v-else-if="item['subtrai'] > 0">
-    Faltaram {{`${item.subtrai}`}} atividades. &#128577;
+    Faltaram {{`${item.subtrai}`}} atividades &#128577;
   </div>
   <div class="card-footer text-muted" v-else>
     Nível concluído! &#128522;
