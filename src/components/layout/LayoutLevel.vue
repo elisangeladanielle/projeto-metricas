@@ -12,7 +12,16 @@
       <p class="card-text">do mês {{`${item.date}`}}:</p>
       <div class="progress">
         <div
-        v-if="getDate(item['date'])"
+        v-if="getDate(item['date']) && item['value'] >= 100"
+        class="progress-bar bg-success"
+        role="progressbar"
+        aria-valuenow="90"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        :style="progressWidth(item)">{{`${item['value']}%`}}
+        </div>
+        <div
+        v-else-if="getDate(item['date'])"
         class="progress-bar progress-bar-striped bg-warning progress-bar-animated"
         role="progressbar"
         aria-valuenow="90"
@@ -40,21 +49,25 @@
         </div>
       </div>
     </div>
-  <div class="card-footer text-muted" v-if="getDate(item['date']) && item['subtrai'] >= 0 && item['value'] >= 100">
-    Você tem {{`${item.subtrai}`*-1}} atividades de lucro! &#128516;
-  </div>
+    <div class="card-footer text-muted" v-if="getDate(item['date']) && item['subtrai'] === 0">
+      Nível concluído! &#128522;
+      <!-- trocar frase de atingiu nível -->
+    </div>
     <div class="card-footer text-muted" v-else-if="getDate(item['date']) && item['subtrai'] < 0">
-    Faça mais {{`${item.subtrai}`}} atividades... &#128521;
-  </div>
-    <div class="card-footer text-muted" v-else-if="item['subtrai'] < 0">
-    Lucro de {{`${item.subtrai}`*-1}} atividades &#128516;
-  </div>
-    <div class="card-footer text-muted" v-else-if="item['subtrai'] > 0">
-    Faltaram {{`${item.subtrai}`}} atividades &#128577;
-  </div>
-  <div class="card-footer text-muted" v-else>
-    Nível concluído! &#128522;
-  </div>
+      Lucro de {{`${item.subtrai}`*-1}} atividades! &#128516;
+    </div>
+    <div class="card-footer text-muted" v-else-if="getDate(item['date'])">
+      Faça mais {{`${item.subtrai}`}} atividades... &#128521;
+    </div>
+      <div class="card-footer text-muted" v-else-if="item['subtrai'] < 0">
+      Lucro de {{`${item.subtrai}`*-1}} atividades &#128516;
+    </div>
+      <div class="card-footer text-muted" v-else-if="item['subtrai'] > 0">
+      Faltaram {{`${item.subtrai}`}} atividades &#128577;
+    </div>
+    <div class="card-footer text-muted" v-else>
+      Nível concluído! &#128522;
+    </div>
   <!-- <div class="card-footer text-muted" v-else-if="item['subtrai'] = 0">
     teste
   </div> -->
